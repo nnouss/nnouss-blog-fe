@@ -4,12 +4,12 @@ export interface DeletePostResponse {
     success: boolean;
 }
 
-export async function deletePost(slug: string, token: string): Promise<DeletePostResponse> {
+export async function deletePost(id: string, token: string): Promise<DeletePostResponse> {
     return fetchApi<DeletePostResponse>(
-        `/post/${slug}`,
+        `/post/${id}`,
         {
             method: 'DELETE',
         },
-        token
+        token,
     );
 }

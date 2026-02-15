@@ -12,16 +12,16 @@ export interface EditPostResponse {
 }
 
 export async function editPost(
-    slug: string,
+    id: string,
     data: EditPostDto,
-    token?: string
+    token?: string,
 ): Promise<EditPostResponse> {
     return await fetchApi<EditPostResponse>(
-        `/post/${slug}`,
+        `/post/${id}`,
         {
             method: 'PUT',
             body: data as any,
         },
-        token
+        token,
     );
 }

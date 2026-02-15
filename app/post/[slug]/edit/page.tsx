@@ -32,7 +32,12 @@ export default function EditPostPage({ params }: EditPostPageProps) {
     const [content, setContent] = useState('');
     const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
 
-    const { data, isLoading, isError, error } = useQuery({
+    const {
+        data: postData,
+        isLoading,
+        isError,
+        error,
+    } = useQuery({
         queryKey: ['post', slug],
         queryFn: () => getPost(slug),
     });
@@ -40,7 +45,8 @@ export default function EditPostPage({ params }: EditPostPageProps) {
     const editPostMutation = useMutation({
         mutationFn: (data: EditPostDto) => {
             if (!token) throw new Error('로그인이 필요합니다.');
-            return editPost(slug, data, token);
+            if (!postData) throw new Error('게시글 정보가 없습니다.');
+            return editPost(postData.id, data, token);
         },
         onSuccess: () => {
             // 게시글 상세, 태그 리스트, 게시글 리스트 쿼리 무효화
@@ -69,13 +75,13 @@ export default function EditPostPage({ params }: EditPostPageProps) {
     });
 
     useEffect(() => {
-        if (data) {
-            setTitle(data.title);
-            setTags(data.tags);
-            setContent(data.content);
-            setThumbnailUrl(data.thumbnail);
+        if (postData) {
+            setTitle(postData.title);
+            setTags(postData.tags);
+            setContent(postData.content);
+            setThumbnailUrl(postData.thumbnail);
         }
-    }, [data]);
+    }, [postData]);
 
     if (isLoading) {
         return (
@@ -105,7 +111,7 @@ export default function EditPostPage({ params }: EditPostPageProps) {
         );
     }
 
-    if (!data) {
+    if (!postData) {
         return (
             <div className='text-center py-10'>
                 <p className='text-muted-foreground'>게시글 데이터를 불러올 수 없습니다.</p>

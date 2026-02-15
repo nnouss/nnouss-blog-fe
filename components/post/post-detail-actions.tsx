@@ -22,10 +22,11 @@ import { deletePost } from '@/lib/apis/post';
 
 interface PostDetailActionsProps {
     authorId: string;
+    id: string;
     slug: string;
 }
 
-export function PostDetailActions({ authorId, slug }: PostDetailActionsProps) {
+export function PostDetailActions({ authorId, id, slug }: PostDetailActionsProps) {
     const router = useRouter();
     const user = useAtomValue(userAtom);
     const token = useAtomValue(accessTokenAtom);
@@ -41,7 +42,7 @@ export function PostDetailActions({ authorId, slug }: PostDetailActionsProps) {
     const deleteMutation = useMutation({
         mutationFn: () => {
             if (!token) throw new Error('로그인이 필요합니다.');
-            return deletePost(slug, token);
+            return deletePost(id, token);
         },
         onSuccess: (data) => {
             // 태그 리스트와 게시글 리스트 쿼리 무효화

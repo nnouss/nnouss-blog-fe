@@ -90,7 +90,7 @@ export default async function PostDetailPage({ params }: PostDetailPageProps) {
         <article className='space-y-8'>
             <PostDetailHeader post={post} />
             <PostDetailContent content={post.content} />
-            <PostDetailActions authorId={post.author.id} slug={post.slug} />
+            <PostDetailActions authorId={post.author.id} id={post.id} slug={post.slug} />
         </article>
     );
 }
