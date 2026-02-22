@@ -2,6 +2,7 @@ import { getPost } from '@/lib/apis/post';
 import { PostDetailHeader } from '@/components/post/post-detail-header';
 import { PostDetailContent } from '@/components/post/post-detail-content';
 import { PostDetailActions } from '@/components/post/post-detail-actions';
+import { CommentList } from '@/components/comment/comment-list';
 import { CommentForm } from '@/components/comment/comment-form';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -91,8 +92,9 @@ export default async function PostDetailPage({ params }: PostDetailPageProps) {
         <article className='space-y-8'>
             <PostDetailHeader post={post} />
             <PostDetailContent content={post.content} />
-            <PostDetailActions authorId={post.author.id} id={post.id} slug={post.slug} />
             <CommentForm postId={post.id} />
+            <CommentList postId={post.id} />
+            <PostDetailActions authorId={post.author.id} id={post.id} slug={post.slug} />
         </article>
     );
 }

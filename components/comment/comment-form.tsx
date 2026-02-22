@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useAtomValue } from 'jotai';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { cn } from '@/lib/utils';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -19,6 +19,7 @@ export function CommentForm({ postId }: CommentFormProps) {
     const [content, setContent] = useState('');
     const [isMounted, setIsMounted] = useState(false);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const queryClient = useQueryClient();
 
     useEffect(() => {
         setIsMounted(true);
@@ -33,6 +34,7 @@ export function CommentForm({ postId }: CommentFormProps) {
         },
         onSuccess: () => {
             setContent('');
+            queryClient.invalidateQueries({ queryKey: ['comments', postId] });
         },
         onError: (error: unknown) => {
             const apiError = error as { message?: string };
