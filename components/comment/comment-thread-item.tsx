@@ -1,59 +1,65 @@
 'use client';
 
-import type { CommentWithThread } from '@/lib/apis/comment';
+import type { CommentThread } from '@/lib/apis/comment';
 import { formatCommentDate } from '@/lib/utils/date';
 import { ReplyForm } from '@/components/comment/reply-form';
-import { CommentThreadItem } from '@/components/comment/comment-thread-item';
 
-interface CommentItemProps {
+export interface CommentThreadItemProps {
     postId: string;
-    comment: CommentWithThread;
+    reply: CommentThread;
     openReplyToId: string | null;
     onOpenReply: (commentId: string) => void;
     onCloseReply: () => void;
 }
 
-export function CommentItem({
+export function CommentThreadItem({
     postId,
-    comment,
+    reply,
     openReplyToId,
     onOpenReply,
     onCloseReply,
-}: CommentItemProps) {
-    const isRootReplyFormOpen = openReplyToId === comment.id;
+}: CommentThreadItemProps) {
+    const isReplyFormOpen = openReplyToId === reply.id;
 
     return (
-        <div className='py-4'>
+        <div className='py-3 pl-4 border-l-2 border-muted ml-2'>
             <div
                 className='cursor-pointer group'
-                onClick={() => onOpenReply(comment.id)}
+                onClick={() => onOpenReply(reply.id)}
                 role='button'
                 tabIndex={0}
                 onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        onOpenReply(comment.id);
+                        onOpenReply(reply.id);
                     }
                 }}
             >
                 <div className='flex-1 min-w-0'>
                     <div className='mb-1'>
-                        <span className='text-sm font-medium'>{comment.author.nickname}</span>
+                        <span className='text-sm font-medium'>{reply.author.nickname}</span>
                     </div>
-                    {comment.isDeleted ? (
+                    {reply.isDeleted ? (
                         <p className='text-sm text-muted-foreground italic'>삭제된 댓글입니다.</p>
                     ) : (
-                        <p className='text-sm whitespace-pre-wrap break-words'>{comment.content}</p>
+                        <p className='text-sm whitespace-pre-wrap break-words'>
+                            {reply.replyToUser && (
+                                <span className='text-blue-500 font-medium mr-1'>
+                                    @{reply.replyToUser.nickname}
+                                </span>
+                            )}
+                            {reply.content}
+                        </p>
                     )}
                     <div className='flex items-center gap-2 mt-1'>
                         <span className='text-xs text-muted-foreground'>
-                            {formatCommentDate(comment.createdAt)}
+                            {formatCommentDate(reply.createdAt)}
                         </span>
                         <button
                             type='button'
                             onClick={(e) => {
                                 e.stopPropagation();
-                                onOpenReply(comment.id);
+                                onOpenReply(reply.id);
                             }}
                             className='text-xs text-muted-foreground hover:text-foreground cursor-pointer'
                         >
@@ -62,24 +68,8 @@ export function CommentItem({
                     </div>
                 </div>
             </div>
-
-            {isRootReplyFormOpen && (
-                <ReplyForm postId={postId} parentId={comment.id} onClose={onCloseReply} />
-            )}
-
-            {comment.thread.length > 0 && (
-                <div className='mt-2 space-y-0'>
-                    {comment.thread.map((reply) => (
-                        <CommentThreadItem
-                            key={reply.id}
-                            postId={postId}
-                            reply={reply}
-                            openReplyToId={openReplyToId}
-                            onOpenReply={onOpenReply}
-                            onCloseReply={onCloseReply}
-                        />
-                    ))}
-                </div>
+            {isReplyFormOpen && (
+                <ReplyForm postId={postId} parentId={reply.id} onClose={onCloseReply} />
             )}
         </div>
     );

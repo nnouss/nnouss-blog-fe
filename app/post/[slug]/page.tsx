@@ -92,8 +92,8 @@ export default async function PostDetailPage({ params }: PostDetailPageProps) {
         <article className='space-y-8'>
             <PostDetailHeader post={post} />
             <PostDetailContent content={post.content} />
-            <CommentForm postId={post.id} />
             <CommentList postId={post.id} />
+            <CommentForm postId={post.id} />
             <PostDetailActions authorId={post.author.id} id={post.id} slug={post.slug} />
         </article>
     );

@@ -39,6 +39,7 @@ function buildPageRange(current: number, total: number): (number | 'ellipsis')[]
 
 export function CommentList({ postId }: CommentListProps) {
     const [page, setPage] = useState(1);
+    const [openReplyToId, setOpenReplyToId] = useState<string | null>(null);
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ['comments', postId, page],
@@ -94,7 +95,16 @@ export function CommentList({ postId }: CommentListProps) {
                 <>
                     <div className='divide-y'>
                         {data.data.map((comment) => (
-                            <CommentItem key={comment.id} comment={comment} />
+                            <CommentItem
+                                key={comment.id}
+                                postId={postId}
+                                comment={comment}
+                                openReplyToId={openReplyToId}
+                                onOpenReply={(id) =>
+                                    setOpenReplyToId((prev) => (prev === id ? null : id))
+                                }
+                                onCloseReply={() => setOpenReplyToId(null)}
+                            />
                         ))}
                     </div>
 
@@ -137,7 +147,7 @@ export function CommentList({ postId }: CommentListProps) {
                                                     {item}
                                                 </PaginationLink>
                                             </PaginationItem>
-                                        )
+                                        ),
                                     )}
 
                                     <PaginationItem>
