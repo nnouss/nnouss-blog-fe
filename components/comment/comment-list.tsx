@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { CommentItem } from '@/components/comment/comment-item';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -40,10 +40,17 @@ function buildPageRange(current: number, total: number): (number | 'ellipsis')[]
 export function CommentList({ postId }: CommentListProps) {
     const [page, setPage] = useState(1);
     const [openReplyToId, setOpenReplyToId] = useState<string | null>(null);
+    const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ['comments', postId, page],
         queryFn: () => getComments(postId, page),
+        enabled: isMounted,
     });
 
     const handlePageChange = (next: number) => {
@@ -66,7 +73,7 @@ export function CommentList({ postId }: CommentListProps) {
                 )}
             </h3>
 
-            {isLoading && (
+            {(!isMounted || isLoading) && (
                 <div className='space-y-4'>
                     {Array.from({ length: 3 }).map((_, i) => (
                         <div key={i} className='py-4 space-y-2'>
@@ -81,17 +88,17 @@ export function CommentList({ postId }: CommentListProps) {
                 </div>
             )}
 
-            {isError && (
+            {isMounted && isError && (
                 <p className='text-sm text-muted-foreground py-4'>
                     댓글을 불러오는 데 실패했습니다.
                 </p>
             )}
 
-            {!isLoading && !isError && data?.data.length === 0 && (
+            {isMounted && !isLoading && !isError && data?.data.length === 0 && (
                 <p className='text-sm text-muted-foreground py-4'>아직 댓글이 없습니다.</p>
             )}
 
-            {!isLoading && !isError && data && data.data.length > 0 && (
+            {isMounted && !isLoading && !isError && data && data.data.length > 0 && (
                 <>
                     <div className='divide-y'>
                         {data.data.map((comment) => (
@@ -100,10 +107,13 @@ export function CommentList({ postId }: CommentListProps) {
                                 postId={postId}
                                 comment={comment}
                                 openReplyToId={openReplyToId}
-                                onOpenReply={(id) =>
+                                editingCommentId={editingCommentId}
+                                onOpenReply={(id: string) =>
                                     setOpenReplyToId((prev) => (prev === id ? null : id))
                                 }
                                 onCloseReply={() => setOpenReplyToId(null)}
+                                onStartEdit={(id: string) => setEditingCommentId(id)}
+                                onCancelEdit={() => setEditingCommentId(null)}
                             />
                         ))}
                     </div>
