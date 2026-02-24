@@ -1,7 +1,12 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import { useAtomValue } from 'jotai';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import type { CommentThread } from '@/lib/apis/comment';
+import { deleteComment } from '@/lib/apis/comment';
 import { formatCommentDate } from '@/lib/utils/date';
+import { userAtom, accessTokenAtom } from '@/lib/atoms/auth';
 import { ReplyForm } from '@/components/comment/reply-form';
 
 export interface CommentThreadItemProps {
@@ -19,7 +24,37 @@ export function CommentThreadItem({
     onOpenReply,
     onCloseReply,
 }: CommentThreadItemProps) {
+    const user = useAtomValue(userAtom);
+    const token = useAtomValue(accessTokenAtom);
+    const queryClient = useQueryClient();
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    const isAuthor = isMounted && user && String(user.id) === reply.authorId;
     const isReplyFormOpen = openReplyToId === reply.id;
+
+    const deleteMutation = useMutation({
+        mutationFn: () => {
+            if (!token) throw new Error('로그인이 필요합니다.');
+            return deleteComment(reply.id, token);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+        },
+        onError: (error: unknown) => {
+            const apiError = error as { message?: string };
+            alert(apiError.message ?? '댓글 삭제에 실패했습니다.');
+        },
+    });
+
+    const handleDelete = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (!confirm('댓글을 삭제하시겠습니까?')) return;
+        deleteMutation.mutate();
+    };
 
     return (
         <div className='py-3 pl-4 border-l-2 border-muted ml-2'>
@@ -65,6 +100,16 @@ export function CommentThreadItem({
                         >
                             답글쓰기
                         </button>
+                        {isAuthor && !reply.isDeleted && (
+                            <button
+                                type='button'
+                                onClick={handleDelete}
+                                disabled={deleteMutation.isPending}
+                                className='text-xs text-muted-foreground hover:text-destructive cursor-pointer disabled:opacity-50'
+                            >
+                                삭제
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
