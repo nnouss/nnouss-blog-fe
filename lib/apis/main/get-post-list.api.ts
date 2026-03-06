@@ -12,6 +12,7 @@ export interface Post {
         nickname: string;
     };
     tags: string[];
+    commentCount: number;
 }
 
 export interface GetPostsParams {

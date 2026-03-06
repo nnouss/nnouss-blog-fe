@@ -1,13 +1,11 @@
 'use client';
 
-import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { VisitorStats } from '@/components/main/visitor-stats';
 import { VisitorChart } from '@/components/main/visitor-chart';
 import { IntroSection } from '@/components/main/intro-section';
 import { Card, CardContent } from '@/components/ui/card';
-import { buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+
 import { getSummary } from '@/lib/apis/metrics/get-summary.api';
 
 export default function Home() {
@@ -43,18 +41,7 @@ export default function Home() {
                 </div>
             </div>
 
-            {/* 개발 글로 이동 링크 */}
-            <div>
-                <Link
-                    href='/dev'
-                    className={cn(
-                        buttonVariants({ variant: 'outline' }),
-                        'self-start text-sm md:text-base'
-                    )}
-                >
-                    개발 글 보러가기
-                </Link>
-            </div>
+            {/* 개발 글로 이동 링크 삭제 (Dev 페이지는 헤더 카테고리에서 진입) */}
         </div>
     );
 }

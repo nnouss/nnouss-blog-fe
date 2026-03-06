@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { formatPostDate } from '@/lib/utils';
 import Image from 'next/image';
@@ -30,7 +30,12 @@ export function PostCard({ post }: PostCardProps) {
                 {/* 썸네일 */}
                 <div className='relative w-full aspect-video overflow-hidden bg-muted'>
                     {post.thumbnail ? (
-                        <Image src={post.thumbnail} alt={post.title} fill className='object-cover' />
+                        <Image
+                            src={post.thumbnail}
+                            alt={post.title}
+                            fill
+                            className='object-cover'
+                        />
                     ) : (
                         <div className='w-full h-full flex items-center justify-center'>
                             <ImageIcon className='w-12 h-12 text-muted-foreground' />
@@ -40,9 +45,16 @@ export function PostCard({ post }: PostCardProps) {
 
                 {/* 제목 영역 */}
                 <div className='px-3 py-0'>
-                    <CardTitle className='m-0 text-sm md:text-base font-semibold leading-snug line-clamp-1'>
-                        {post.title}
-                    </CardTitle>
+                    <div className='flex items-center gap-1'>
+                        <CardTitle className='m-0 text-sm md:text-base font-semibold leading-snug line-clamp-1 flex-1 min-w-0'>
+                            {post.title}
+                        </CardTitle>
+                        {post.commentCount > 0 && (
+                            <span className='text-[10px] md:text-xs text-red-500 dark:text-red-400 font-semibold flex-shrink-0'>
+                                [{post.commentCount}]
+                            </span>
+                        )}
+                    </div>
                 </div>
 
                 {/* 메타 + 태그 영역 */}
