@@ -67,19 +67,19 @@ export function PostList({ selectedTag }: PostListProps) {
         );
     }
 
-    if (posts.length === 0) {
-        return (
-            <div className='text-center py-10'>
-                <p className='text-muted-foreground'>게시글이 없습니다.</p>
-            </div>
-        );
-    }
-
     return (
-        <div className='space-y-4'>
-            {posts.map((post) => (
-                <PostCard key={post.id} post={post} />
-            ))}
+        <div className='space-y-6'>
+            {posts.length === 0 ? (
+                <div className='text-center py-10'>
+                    <p className='text-muted-foreground'>게시글이 없습니다.</p>
+                </div>
+            ) : (
+                <div className='grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3'>
+                    {posts.map((post) => (
+                        <PostCard key={post.id} post={post} />
+                    ))}
+                </div>
+            )}
             <div ref={loadMoreRef} className='h-10' />
             {isFetchingNextPage && <PostListSkeleton count={2} />}
         </div>
