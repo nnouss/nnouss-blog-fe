@@ -1,7 +1,9 @@
 import { fetchApi } from '@/lib/apis/core';
+import type { PostType } from '@/lib/apis/write';
 
 export interface EditPostDto {
     title?: string;
+    type?: PostType;
     tags?: string[];
     content?: string;
     thumbnailUrl?: string | null;

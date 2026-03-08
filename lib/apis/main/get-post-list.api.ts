@@ -1,8 +1,10 @@
 import { fetchApi } from '@/lib/apis/core';
+import type { PostType } from '@/lib/apis/write';
 
 export interface Post {
     id: string;
     title: string;
+    type?: PostType;
     thumbnail: string | null;
     slug: string;
     views: number;

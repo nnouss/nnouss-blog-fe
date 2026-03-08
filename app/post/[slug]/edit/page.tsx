@@ -8,6 +8,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { accessTokenAtom } from '@/lib/atoms/auth';
 import { getPost } from '@/lib/apis/post';
 import { editPost, EditPostDto } from '@/lib/apis/edit';
+import type { PostType } from '@/lib/apis/write';
 import type { ApiError } from '@/lib/apis/core';
 import { TagInput } from '@/components/write/tag/tag-input';
 import { TiptapEditor } from '@/components/write/tiptap/tiptap-editor';
@@ -15,6 +16,13 @@ import { ThumbnailUpload } from '@/components/write/thumbnail/thumbnail-upload';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 
 interface EditPostPageProps {
     params: Promise<{
@@ -28,6 +36,7 @@ export default function EditPostPage({ params }: EditPostPageProps) {
     const queryClient = useQueryClient();
     const token = useAtomValue(accessTokenAtom);
     const [title, setTitle] = useState('');
+    const [type, setType] = useState<PostType>('dev');
     const [tags, setTags] = useState<string[]>([]);
     const [content, setContent] = useState('');
     const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
@@ -77,6 +86,7 @@ export default function EditPostPage({ params }: EditPostPageProps) {
     useEffect(() => {
         if (postData) {
             setTitle(postData.title);
+            setType(postData.type ?? 'dev');
             setTags(postData.tags);
             setContent(postData.content);
             setThumbnailUrl(postData.thumbnail);
@@ -123,6 +133,7 @@ export default function EditPostPage({ params }: EditPostPageProps) {
         e.preventDefault();
         editPostMutation.mutate({
             title,
+            type,
             tags,
             content,
             thumbnailUrl: thumbnailUrl || null,
@@ -141,6 +152,19 @@ export default function EditPostPage({ params }: EditPostPageProps) {
                         placeholder='제목을 입력하세요'
                         required
                     />
+                </div>
+
+                <div className='space-y-2'>
+                    <Label htmlFor='type'>카테고리</Label>
+                    <Select value={type} onValueChange={(v: PostType) => setType(v)}>
+                        <SelectTrigger id='type' className='w-full'>
+                            <SelectValue placeholder='카테고리를 선택하세요' />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value='dev'>Dev</SelectItem>
+                            <SelectItem value='story'>Story</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
 
                 <div className='space-y-2'>
