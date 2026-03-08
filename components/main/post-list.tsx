@@ -3,22 +3,25 @@
 import { useEffect, useRef } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getPosts } from '@/lib/apis/main';
+import type { PostType } from '@/lib/apis/write';
 import { PostListSkeleton } from '@/components/loading';
 import { PostCard } from './post-card';
 
 interface PostListProps {
+    type?: PostType;
     selectedTag?: string;
 }
 
-export function PostList({ selectedTag }: PostListProps) {
+export function PostList({ type, selectedTag }: PostListProps) {
     const loadMoreRef = useRef<HTMLDivElement>(null);
 
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } =
         useInfiniteQuery({
-            queryKey: ['posts', selectedTag],
+            queryKey: ['posts', type, selectedTag],
             queryFn: ({ pageParam = 1 }) =>
                 getPosts({
                     page: pageParam,
+                    ...(type && { type }),
                     ...(selectedTag && { tag: selectedTag }),
                 }),
             getNextPageParam: (lastPage, allPages) => {
@@ -39,7 +42,7 @@ export function PostList({ selectedTag }: PostListProps) {
                     fetchNextPage();
                 }
             },
-            { threshold: 0.1 }
+            { threshold: 0.1 },
         );
 
         if (loadMoreRef.current) {

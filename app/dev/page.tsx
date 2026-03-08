@@ -38,9 +38,8 @@ export default function DevPage() {
                         variant='horizontal'
                     />
                 </div>
-                <PostList selectedTag={selectedTag} />
+                <PostList type='dev' selectedTag={selectedTag} />
             </main>
         </div>
     );
 }
-

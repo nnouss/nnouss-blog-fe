@@ -19,12 +19,16 @@ export interface Post {
 
 export interface GetPostsParams {
     page: number;
+    type?: PostType;
     tag?: string;
 }
 
 export async function getPosts(params: GetPostsParams): Promise<Post[]> {
     const queryParams = new URLSearchParams();
     queryParams.append('page', params.page.toString());
+    if (params.type) {
+        queryParams.append('type', params.type);
+    }
     if (params.tag) {
         queryParams.append('tag', params.tag);
     }
