@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { VisitorStats } from '@/components/main/visitor-stats';
 import { VisitorChart } from '@/components/main/visitor-chart';
 import { IntroSection } from '@/components/main/intro-section';
+import { DevSlide } from '@/components/main/dev-slide';
 import { Card, CardContent } from '@/components/ui/card';
 
 import { getSummary } from '@/lib/apis/metrics/get-summary.api';
@@ -41,7 +42,8 @@ export default function Home() {
                 </div>
             </div>
 
-            {/* 개발 글로 이동 링크 삭제 (Dev 페이지는 헤더 카테고리에서 진입) */}
+            {/* DEV 최신 게시글 슬라이드 */}
+            <DevSlide />
         </div>
     );
 }
