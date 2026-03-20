@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { getTags } from '@/lib/apis/main';
+import type { PostType } from '@/lib/apis/write';
 import { Badge } from '@/components/ui/badge';
 import { TagListSkeleton } from '@/components/loading';
 import { cn } from '@/lib/utils';
@@ -10,12 +11,13 @@ interface TagListProps {
     selectedTag?: string;
     onTagSelect?: (tag: string | undefined) => void;
     variant?: 'vertical' | 'horizontal';
+    type?: PostType;
 }
 
-export function TagList({ selectedTag, onTagSelect, variant = 'vertical' }: TagListProps) {
+export function TagList({ selectedTag, onTagSelect, variant = 'vertical', type }: TagListProps) {
     const { data: tags, isLoading } = useQuery({
-        queryKey: ['tags'],
-        queryFn: () => getTags(),
+        queryKey: ['tags', type],
+        queryFn: () => getTags({ type }),
     });
 
     if (isLoading) {

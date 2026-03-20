@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { TagList } from '@/components/main/tag-list';
 import { PostList } from '@/components/main/post-list';
 
-export default function DevPage() {
+export default function StoryPage() {
     const [selectedTag, setSelectedTag] = useState<string | undefined>();
 
     const handleTagSelect = (tag: string | undefined) => {
@@ -24,7 +24,7 @@ export default function DevPage() {
                         selectedTag={selectedTag}
                         onTagSelect={handleTagSelect}
                         variant='vertical'
-                        type='dev'
+                        type='story'
                     />
                 </div>
             </aside>
@@ -37,11 +37,12 @@ export default function DevPage() {
                         selectedTag={selectedTag}
                         onTagSelect={handleTagSelect}
                         variant='horizontal'
-                        type='dev'
+                        type='story'
                     />
                 </div>
-                <PostList type='dev' selectedTag={selectedTag} />
+                <PostList type='story' selectedTag={selectedTag} />
             </main>
         </div>
     );
 }
+

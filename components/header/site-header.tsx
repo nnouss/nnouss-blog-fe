@@ -78,6 +78,9 @@ export function SiteHeader() {
                         <Link href='/dev' className='hover:text-foreground transition-colors'>
                             Dev
                         </Link>
+                        <Link href='/story' className='hover:text-foreground transition-colors'>
+                            Story
+                        </Link>
                     </nav>
                     <ModeToggle />
                     {/* 유저 드롭다운 (모든 화면) */}
@@ -139,6 +142,12 @@ export function SiteHeader() {
                                             className='block py-2 px-3 text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground transition-colors'
                                         >
                                             Dev
+                                        </Link>
+                                        <Link
+                                            href='/story'
+                                            className='block py-2 px-3 text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground transition-colors'
+                                        >
+                                            Story
                                         </Link>
                                     </nav>
                                 </div>
