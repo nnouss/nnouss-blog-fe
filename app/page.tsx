@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { VisitorStats } from '@/components/main/visitor-stats';
 import { VisitorChart } from '@/components/main/visitor-chart';
 import { IntroSection } from '@/components/main/intro-section';
-import { DevSlide } from '@/components/main/dev-slide';
+import { LatestPostsSlide } from '@/components/main/latest-posts-slide';
 import { Card, CardContent } from '@/components/ui/card';
 
 import { getSummary } from '@/lib/apis/metrics/get-summary.api';
@@ -42,8 +42,9 @@ export default function Home() {
                 </div>
             </div>
 
-            {/* DEV 최신 게시글 슬라이드 */}
-            <DevSlide />
+            {/* DEV / STORY 최신 게시글 슬라이드 */}
+            <LatestPostsSlide type='dev' />
+            <LatestPostsSlide type='story' />
         </div>
     );
 }
