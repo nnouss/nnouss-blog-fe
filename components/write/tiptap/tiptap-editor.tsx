@@ -11,9 +11,10 @@ import { ResizableImage } from 'tiptap-extension-resizable-image';
 import 'tiptap-extension-resizable-image/styles.css';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import Highlight from '@tiptap/extension-highlight';
+import Link from '@tiptap/extension-link';
 import { all, createLowlight, common } from 'lowlight';
 import { TiptapToolbar } from './tiptap-toolbar';
-import './tiptap-editor.css';
+// import './tiptap-editor.css';
 import 'highlight.js/styles/atom-one-dark.css';
 
 import css from 'highlight.js/lib/languages/css';
@@ -38,6 +39,7 @@ export function TiptapEditor({ content, onChange, editable = true }: TiptapEdito
     const editor = useEditor({
         extensions: [
             StarterKit.configure({
+                codeBlock: false,
                 heading: {
                     levels: [1, 2, 3, 4],
                 },
@@ -70,6 +72,13 @@ export function TiptapEditor({ content, onChange, editable = true }: TiptapEdito
             }),
             Image,
             ResizableImage,
+            Link.configure({
+                openOnClick: !editable,
+                autolink: true,
+                HTMLAttributes: {
+                    class: 'text-primary underline underline-offset-2',
+                },
+            }),
         ],
         immediatelyRender: false,
         onUpdate: onChange
@@ -81,8 +90,8 @@ export function TiptapEditor({ content, onChange, editable = true }: TiptapEdito
         editorProps: {
             attributes: {
                 class: editable
-                    ? 'focus:outline-none min-h-[600px] p-4'
-                    : 'focus:outline-none min-h-[300px]',
+                    ? 'tiptap prose prose-sm max-w-none dark:prose-invert focus:outline-none min-h-[600px] p-4'
+                    : 'tiptap prose prose-sm max-w-none dark:prose-invert focus:outline-none min-h-[300px] p-4',
                 spellcheck: 'false',
                 autocorrect: 'off',
                 autocapitalize: 'off',

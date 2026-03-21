@@ -6,7 +6,9 @@ import {
     Italic,
     Strikethrough,
     Underline,
+    Code,
     Code2,
+    Link2,
     List,
     ListOrdered,
     Quote,
@@ -27,6 +29,7 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useAtomValue } from 'jotai';
@@ -34,12 +37,37 @@ import { accessTokenAtom } from '@/lib/atoms/auth';
 import imageCompression from 'browser-image-compression';
 import { uploadImage } from '@/lib/apis/write';
 
+/** Tiptap Highlight multicolor — `toggleHighlight({ color })`와 동일한 hex */
+const HIGHLIGHT_PRESETS = [
+    { color: '#fef08a', label: '노랑' },
+    { color: '#86efac', label: '초록' },
+    { color: '#93c5fd', label: '파랑' },
+    { color: '#fca5a5', label: '빨강' },
+    { color: '#c4b5fd', label: '보라' },
+] as const;
+
 interface TiptapToolbarProps {
     editor: Editor;
 }
 
 export function TiptapToolbar({ editor }: TiptapToolbarProps) {
     const accessToken = useAtomValue(accessTokenAtom);
+
+    const applyLink = () => {
+        const previous = editor.getAttributes('link').href as string | undefined;
+        const next = window.prompt('링크 URL', previous ?? 'https://');
+
+        if (next === null) {
+            return;
+        }
+
+        if (next === '') {
+            editor.chain().focus().unsetLink().run();
+            return;
+        }
+
+        editor.chain().focus().setLink({ href: next }).run();
+    };
 
     // 유튜브 링크 임베드
     const addYoutubeVideo = () => {
@@ -123,12 +151,79 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
             </Button>
             <Button
                 type='button'
-                variant={editor.isActive('highlight') ? 'default' : 'ghost'}
+                variant={editor.isActive('code') ? 'default' : 'ghost'}
                 size='sm'
-                onClick={() => editor.chain().focus().toggleHighlight().run()}
+                onClick={() => editor.chain().focus().toggleCode().run()}
+                className='h-8 w-8 p-0 cursor-pointer'
+                title='인라인 코드'
+            >
+                <Code className='h-4 w-4' />
+            </Button>
+            <Button
+                type='button'
+                variant={editor.isActive('link') ? 'default' : 'ghost'}
+                size='sm'
+                onClick={applyLink}
+                className='h-8 w-8 p-0 cursor-pointer'
+                title='링크'
+            >
+                <Link2 className='h-4 w-4' />
+            </Button>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button
+                        type='button'
+                        variant={editor.isActive('highlight') ? 'default' : 'ghost'}
+                        size='sm'
+                        className='h-8 w-8 p-0 cursor-pointer'
+                    >
+                        <Highlighter className='h-4 w-4' />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align='start'>
+                    {HIGHLIGHT_PRESETS.map(({ color, label }) => (
+                        <DropdownMenuItem
+                            key={color}
+                            onClick={() => editor.chain().focus().toggleHighlight({ color }).run()}
+                        >
+                            <span
+                                className='mr-2 h-4 w-4 shrink-0 rounded-sm border border-border'
+                                style={{ backgroundColor: color }}
+                                aria-hidden
+                            />
+                            <span className='flex-1'>{label}</span>
+                            {editor.isActive('highlight', { color }) ? (
+                                <span className='text-xs text-muted-foreground'>적용됨</span>
+                            ) : null}
+                        </DropdownMenuItem>
+                    ))}
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => editor.chain().focus().unsetHighlight().run()}>
+                        하이라이트 제거
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* 인용구 */}
+            <Button
+                type='button'
+                variant={editor.isActive('blockquote') ? 'default' : 'ghost'}
+                size='sm'
+                onClick={() => editor.chain().focus().toggleBlockquote().run()}
                 className='h-8 w-8 p-0 cursor-pointer'
             >
-                <Highlighter className='h-4 w-4' />
+                <Quote className='h-4 w-4' />
+            </Button>
+
+            {/* 코드 블록 */}
+            <Button
+                type='button'
+                variant={editor.isActive('codeBlock') ? 'default' : 'ghost'}
+                size='sm'
+                onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+                className='h-8 w-8 p-0 cursor-pointer'
+            >
+                <Code2 className='h-4 w-4' />
             </Button>
 
             <div className='w-px h-6 bg-border mx-1' />
@@ -250,30 +345,6 @@ export function TiptapToolbar({ editor }: TiptapToolbarProps) {
                 className='h-8 w-8 p-0 cursor-pointer'
             >
                 <ListOrdered className='h-4 w-4' />
-            </Button>
-
-            <div className='w-px h-6 bg-border mx-1' />
-
-            {/* 인용구 */}
-            <Button
-                type='button'
-                variant={editor.isActive('blockquote') ? 'default' : 'ghost'}
-                size='sm'
-                onClick={() => editor.chain().focus().toggleBlockquote().run()}
-                className='h-8 w-8 p-0 cursor-pointer'
-            >
-                <Quote className='h-4 w-4' />
-            </Button>
-
-            {/* 코드 블록 */}
-            <Button
-                type='button'
-                variant={editor.isActive('codeBlock') ? 'default' : 'ghost'}
-                size='sm'
-                onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-                className='h-8 w-8 p-0 cursor-pointer'
-            >
-                <Code2 className='h-4 w-4' />
             </Button>
 
             <div className='w-px h-6 bg-border mx-1' />

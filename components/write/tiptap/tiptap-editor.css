@@ -1,4 +1,5 @@
-/* 기본 에디터 스타일 */
+/*
+/* 기본 에디터 스타일 * /
 .tiptap {
     outline: none;
 }
@@ -73,20 +74,20 @@
     font-size: 0.9em;
 }
 
-/* 하이라이트 스타일 */
+/* 하이라이트 스타일 * /
 .tiptap mark {
-    background-color: #fef08a; /* 노란색 하이라이트 */
+    background-color: #fef08a; /* 노란색 하이라이트 * /
     border-radius: 0.25rem;
     padding: 0.1em 0.2em;
 }
 
-/* 다크 모드 하이라이트 */
+/* 다크 모드 하이라이트 * /
 .dark .tiptap mark {
-    background-color: #854d0e; /* 다크 모드용 어두운 노란색 */
+    background-color: #854d0e; /* 다크 모드용 어두운 노란색 * /
     color: #fef08a;
 }
 
-/* 멀티컬러 하이라이트 지원 */
+/* 멀티컬러 하이라이트 지원 * /
 .tiptap mark[data-color] {
     background-color: var(--highlight-color);
 }
@@ -136,7 +137,7 @@
     color: #c4b5fd;
 }
 
-/* YouTube 임베드 반응형 스타일 */
+/* YouTube 임베드 반응형 스타일 * /
 .tiptap .youtube-embed {
     position: relative;
     width: 100%;
@@ -156,7 +157,7 @@
     border-radius: 0.5rem;
 }
 
-/* 모바일 반응형 */
+/* 모바일 반응형 * /
 @media (max-width: 640px) {
     .tiptap .youtube-embed {
         max-width: 100%;
@@ -164,9 +165,9 @@
     }
 }
 
-/* 코드 블록 스타일 */
+/* 코드 블록 스타일 * /
 .tiptap pre {
-    background-color: #0f172a; /* 다크에서도 구분되는 진한 네이비 */
+    background-color: #0f172a; /* 다크에서도 구분되는 진한 네이비 * /
     border: 1px solid #1f2937;
     padding: 1em;
     border-radius: 0.5rem;
@@ -197,7 +198,7 @@
     display: block;
 }
 
-/* Lowlight 하이라이팅 색상 - atom-one-dark 참고 */
+/* Lowlight 하이라이팅 색상 - atom-one-dark 참고 * /
 .tiptap pre code.hljs {
     display: block;
     overflow-x: auto;
@@ -324,3 +325,5 @@
 .tiptap [style*='text-align: justify'] {
     text-align: justify;
 }
+
+*/
