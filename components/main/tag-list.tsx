@@ -14,11 +14,27 @@ interface TagListProps {
     type?: PostType;
 }
 
+function getCategorySelectedClasses(type: PostType = 'dev') {
+    if (type === 'dev') {
+        return 'bg-sky-100 text-sky-800 dark:bg-sky-900 dark:text-sky-200 font-medium';
+    }
+    return 'bg-rose-100 text-rose-800 dark:bg-rose-900 dark:text-rose-200 font-medium';
+}
+
+function getCategoryHoverClasses(type: PostType = 'dev') {
+    if (type === 'dev') {
+        return 'hover:bg-sky-100 hover:text-sky-800 dark:hover:bg-sky-900 dark:hover:text-sky-200';
+    }
+    return 'hover:bg-rose-100 hover:text-rose-800 dark:hover:bg-rose-900 dark:hover:text-rose-200';
+}
+
 export function TagList({ selectedTag, onTagSelect, variant = 'vertical', type }: TagListProps) {
     const { data: tags, isLoading } = useQuery({
         queryKey: ['tags', type],
         queryFn: () => getTags({ type }),
     });
+    const selectedClasses = getCategorySelectedClasses(type);
+    const hoverClasses = getCategoryHoverClasses(type);
 
     if (isLoading) {
         return <TagListSkeleton variant={variant} />;
@@ -36,8 +52,8 @@ export function TagList({ selectedTag, onTagSelect, variant = 'vertical', type }
                                 className={cn(
                                     'px-3 py-1.5 rounded-full text-sm whitespace-nowrap transition-colors flex-shrink-0',
                                     !selectedTag
-                                        ? 'bg-sky-400/15 dark:bg-sky-500/15 text-sky-900 dark:text-sky-50 font-medium'
-                                        : 'bg-background hover:bg-sky-400/10 dark:hover:bg-sky-500/10 hover:text-sky-800 dark:hover:text-sky-200'
+                                        ? selectedClasses
+                                        : `bg-background ${hoverClasses}`
                                 )}
                             >
                                 전체
@@ -49,8 +65,8 @@ export function TagList({ selectedTag, onTagSelect, variant = 'vertical', type }
                                     className={cn(
                                         'px-3 py-1.5 rounded-full text-sm whitespace-nowrap transition-colors flex-shrink-0 flex items-center gap-1.5',
                                         selectedTag === tag.name
-                                            ? 'bg-sky-400/15 dark:bg-sky-500/15 text-sky-900 dark:text-sky-50 font-medium'
-                                            : 'bg-background hover:bg-sky-400/10 dark:hover:bg-sky-500/10 hover:text-sky-800 dark:hover:text-sky-200'
+                                            ? selectedClasses
+                                            : `bg-background ${hoverClasses}`
                                     )}
                                 >
                                     <span>{tag.name}</span>
@@ -78,8 +94,8 @@ export function TagList({ selectedTag, onTagSelect, variant = 'vertical', type }
                         className={cn(
                             'text-left px-3 py-2 rounded-md transition-colors cursor-pointer',
                             !selectedTag
-                                ? 'bg-sky-400/15 dark:bg-sky-500/15 text-sky-900 dark:text-sky-50 font-medium'
-                                : 'bg-background hover:bg-sky-400/10 dark:hover:bg-sky-500/10 hover:text-sky-800 dark:hover:text-sky-200'
+                                ? selectedClasses
+                                : `bg-background ${hoverClasses}`
                         )}
                     >
                         <span className='text-sm'>전체</span>
@@ -91,8 +107,8 @@ export function TagList({ selectedTag, onTagSelect, variant = 'vertical', type }
                             className={cn(
                                 'text-left px-3 py-2 rounded-md transition-colors cursor-pointer',
                                 selectedTag === tag.name
-                                    ? 'bg-sky-400/15 dark:bg-sky-500/15 text-sky-900 dark:text-sky-50 font-medium'
-                                    : 'bg-background hover:bg-sky-400/10 dark:hover:bg-sky-500/10 hover:text-sky-800 dark:hover:text-sky-200'
+                                    ? selectedClasses
+                                    : `bg-background ${hoverClasses}`
                             )}
                         >
                             <div className='flex items-center justify-between'>
