@@ -48,6 +48,14 @@ export function formatPostDate(date: Date | string | number): string {
 }
 
 /**
+ * 게시글 상세 페이지 날짜 포맷: yyyy년 M월 d일
+ */
+export function formatPostDetailDate(date: Date | string | number): string {
+    const dateObj = typeof date === 'string' || typeof date === 'number' ? new Date(date) : date;
+    return format(dateObj, 'yyyy년 M월 d일', { locale: ko });
+}
+
+/**
  * 댓글/답글 날짜를 yyyy.MM.dd HH:mm 포맷으로 변환
  * @param dateStr - 변환할 날짜 문자열
  * @returns 포맷된 날짜 문자열 (예: "2025.12.22 12:35")

@@ -48,7 +48,7 @@ export function LatestPostsSlide({ type }: LatestPostsSlideProps) {
                         <ChevronRight className='size-4' />
                     </Link>
                 </div>
-                <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+                <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3'>
                     {Array.from({ length: 5 }).map((_, i) => (
                         <Skeleton key={i} className='aspect-video w-full rounded-lg' />
                     ))}
@@ -87,7 +87,7 @@ export function LatestPostsSlide({ type }: LatestPostsSlideProps) {
                             {posts.map((post) => (
                                 <CarouselItem
                                     key={post.id}
-                                    className='pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4'
+                                    className='pl-4 basis-full sm:basis-1/2 md:basis-1/3'
                                 >
                                     <PostCard post={post} postType={type} />
                                 </CarouselItem>
