@@ -24,8 +24,6 @@ export function PostDetailHeader({ post }: PostDetailHeaderProps) {
                     <span>{post.author.nickname}</span>
                     <span>•</span>
                     <span>{formatPostDate(post.createdAt)}</span>
-                    <span>•</span>
-                    <span>조회 {post.views}</span>
                 </div>
                 {post.tags && post.tags.length > 0 && (
                     <div className='flex flex-wrap gap-2'>

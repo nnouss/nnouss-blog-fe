@@ -79,7 +79,7 @@ export function PostList({ type, selectedTag }: PostListProps) {
             ) : (
                 <div className='grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3'>
                     {posts.map((post) => (
-                        <PostCard key={post.id} post={post} />
+                        <PostCard key={post.id} post={post} postType={type} />
                     ))}
                 </div>
             )}

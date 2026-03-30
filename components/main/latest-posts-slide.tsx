@@ -89,7 +89,7 @@ export function LatestPostsSlide({ type }: LatestPostsSlideProps) {
                                     key={post.id}
                                     className='pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4'
                                 >
-                                    <PostCard post={post} />
+                                    <PostCard post={post} postType={type} />
                                 </CarouselItem>
                             ))}
                         </CarouselContent>
