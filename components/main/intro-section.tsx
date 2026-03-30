@@ -14,7 +14,7 @@ const iconMap = {
 export function IntroSection() {
     return (
         <div className='flex-1 min-w-0 flex'>
-            <Card className='w-full flex-1 flex flex-col min-h-[280px] border-2 border-amber-400 dark:border-amber-500 shadow-lg shadow-amber-500/20 dark:shadow-amber-500/30'>
+            <Card className='w-full flex-1 flex flex-col min-h-[280px] border-2 border-amber-400 dark:border-amber-500 shadow-lg shadow-amber-500/20 dark:shadow-amber-500/30 rounded-[4px]'>
                 <CardContent className='p-6 flex flex-col justify-between flex-1 min-h-0 gap-6'>
                     <div>
                         <h1 className='text-2xl font-bold tracking-tight md:text-3xl mb-2'>

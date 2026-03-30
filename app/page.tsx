@@ -25,7 +25,7 @@ export default function Home() {
                 <IntroSection />
                 {/* 오른쪽: 방문자 통계 카드 */}
                 <div className='w-full md:w-64 flex-shrink-0 flex'>
-                    <Card className='w-full h-full md:h-full flex flex-col min-h-[280px] md:min-h-0'>
+                    <Card className='w-full h-full md:h-full flex flex-col min-h-[280px] md:min-h-0 rounded-[4px]'>
                         <CardContent className='p-0 flex flex-col flex-1 min-h-0 justify-between'>
                             <div className='flex-shrink-0 px-6'>
                                 <VisitorChart />
