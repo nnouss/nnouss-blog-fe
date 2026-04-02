@@ -70,8 +70,19 @@ export function SiteHeader() {
     return (
         <header className='sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur'>
             <div className='mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-4 sm:flex-nowrap sm:gap-6'>
-                <Link href='/' className='text-lg font-semibold tracking-tight sm:text-xl'>
-                    NNOUSS.LOG
+                <Link
+                    href='/'
+                    className='group inline-flex items-center text-lg font-extrabold tracking-[0.08em] sm:text-xl'
+                >
+                    <span className='bg-gradient-to-r from-sky-500 via-violet-500 to-fuchsia-500 bg-clip-text text-transparent transition-all duration-300 group-hover:brightness-110 dark:from-sky-400 dark:via-violet-400 dark:to-fuchsia-400'>
+                        NNOUSS
+                    </span>
+                    <span className='mx-1 text-muted-foreground/90 transition-colors duration-300 group-hover:text-foreground'>
+                        .
+                    </span>
+                    <span className='text-foreground/90 transition-colors duration-300 group-hover:text-foreground'>
+                        LOG
+                    </span>
                 </Link>
                 <div className='flex flex-wrap items-center justify-end gap-2 sm:gap-3'>
                     <nav className='hidden sm:flex items-center gap-3 text-sm font-medium text-muted-foreground mr-2'>
