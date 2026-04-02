@@ -10,6 +10,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { getSummary } from '@/lib/apis/metrics/get-summary.api';
 
 export default function Home() {
+    const currentYear = new Date().getFullYear();
+
     const { data: summary, isLoading: isSummaryLoading } = useQuery({
         queryKey: ['metrics', 'summary'],
         queryFn: getSummary,
@@ -45,6 +47,10 @@ export default function Home() {
             {/* DEV / STORY 최신 게시글 슬라이드 */}
             <LatestPostsSlide type='dev' />
             <LatestPostsSlide type='story' />
+
+            <footer className='mt-4 border-t border-border/60 pt-6 text-center text-sm text-muted-foreground'>
+                <p>Copyright © {currentYear} NNOUSS.LOG. All rights reserved.</p>
+            </footer>
         </div>
     );
 }
