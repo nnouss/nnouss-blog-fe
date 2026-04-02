@@ -23,6 +23,16 @@ export const defaultMetadata: Metadata = {
     // 기본 설명
     description: defaultDescription,
 
+    // 파비콘 설정
+    icons: {
+        icon: [
+            { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+            { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+            { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+        ],
+        shortcut: '/favicon-32x32.png',
+    },
+
     // 키워드 (검색 엔진 최적화)
     keywords: ['블로그', '개발', '프로그래밍', '기술', '일상', 'nnouss'],
 
@@ -48,9 +58,9 @@ export const defaultMetadata: Metadata = {
         description: defaultDescription,
         images: [
             {
-                url: `${siteUrl}/og-image.png`, //
-                width: 1200,
-                height: 630,
+                url: `${siteUrl}/og-image.png`,
+                width: 800,
+                height: 800,
                 alt: siteName,
             },
         ],
