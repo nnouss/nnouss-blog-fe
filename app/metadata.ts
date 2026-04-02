@@ -89,6 +89,6 @@ export const defaultMetadata: Metadata = {
 
     // Google Search Console 인증
     verification: {
-        google: 'BYWQ5XkCGl3kGNU3B4GmuiG6O8i1wUxH0fxAE1jVE00',
+        google: 'RxKnE4o4e7fZVt6BdVEeCp-2_k8xAVnk31WNl8lnpis',
     },
 };
