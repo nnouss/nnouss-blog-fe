@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 
 // 사이트 기본 정보
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.slas.kr';
-const siteName = 'Slas.log';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://nnouss.xyz';
+const siteName = 'NNOUSS.LOG';
 const defaultDescription =
-    'Slas의 개인 블로그입니다. 개발, 일상, 그리고 다양한 주제의 글을 공유합니다.';
+    'nnouss의 개인 블로그입니다. 개발, 일상, 그리고 다양한 주제의 글을 공유합니다.';
 
 /**
  * 기본 메타데이터 설정
@@ -17,19 +17,19 @@ export const defaultMetadata: Metadata = {
     // 기본 타이틀 설정
     title: {
         default: siteName,
-        template: `%s | ${siteName}`, // 하위 페이지에서 "제목 | Slas.log" 형식으로 표시
+        template: `%s | ${siteName}`, // 하위 페이지에서 "제목 | nnouss.log" 형식으로 표시
     },
 
     // 기본 설명
     description: defaultDescription,
 
     // 키워드 (검색 엔진 최적화)
-    keywords: ['블로그', '개발', '프로그래밍', '기술', '일상', 'Slas'],
+    keywords: ['블로그', '개발', '프로그래밍', '기술', '일상', 'nnouss'],
 
     // 작성자 정보
-    authors: [{ name: 'Slas' }],
-    creator: 'Slas',
-    publisher: 'Slas',
+    authors: [{ name: 'nnouss' }],
+    creator: 'nnouss',
+    publisher: 'nnouss',
 
     // 포맷 감지 비활성화 (이메일, 주소, 전화번호 자동 링크 방지)
     formatDetection: {

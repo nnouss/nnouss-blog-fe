@@ -37,7 +37,7 @@ export async function generateMetadata({
     const description =
         plainContent.length > 160 ? `${plainContent.slice(0, 160)}...` : plainContent;
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.slas.kr';
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://nnouss.xyz';
     const url = `${siteUrl}/post/${slug}`;
     const imageUrl = post.thumbnail || `${siteUrl}/og-image.png`;
 
@@ -50,7 +50,7 @@ export async function generateMetadata({
             title: post.title,
             description,
             url,
-            siteName: 'Slas.log',
+            siteName: 'NNOUSS.LOG',
             images: [
                 {
                     url: imageUrl,

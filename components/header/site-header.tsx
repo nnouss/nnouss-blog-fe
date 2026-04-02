@@ -71,7 +71,7 @@ export function SiteHeader() {
         <header className='sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur'>
             <div className='mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-4 sm:flex-nowrap sm:gap-6'>
                 <Link href='/' className='text-lg font-semibold tracking-tight sm:text-xl'>
-                    Slas.log
+                    NNOUSS.LOG
                 </Link>
                 <div className='flex flex-wrap items-center justify-end gap-2 sm:gap-3'>
                     <nav className='hidden sm:flex items-center gap-3 text-sm font-medium text-muted-foreground mr-2'>

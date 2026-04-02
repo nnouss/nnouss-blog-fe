@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/apis/main';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.slas.kr';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://nnouss.xyz';
 
 // ISR 설정: 1일마다 재생성 (86400초 = 24시간)
 export const revalidate = 86400;
