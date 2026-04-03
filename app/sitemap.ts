@@ -1,12 +1,13 @@
 import { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/apis/main';
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://nnouss.xyz';
+import { getPublicSiteUrl } from '@/lib/site-url';
 
 // ISR 설정: 1일마다 재생성 (86400초 = 24시간)
 export const revalidate = 86400;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+    const siteUrl = await getPublicSiteUrl();
+
     // 정적 페이지들
     const staticPages: MetadataRoute.Sitemap = [
         {

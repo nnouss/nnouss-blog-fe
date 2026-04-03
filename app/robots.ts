@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next';
+import { getPublicSiteUrl } from '@/lib/site-url';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://nnouss.xyz';
+export default async function robots(): Promise<MetadataRoute.Robots> {
+    const siteUrl = await getPublicSiteUrl();
 
-export default function robots(): MetadataRoute.Robots {
     return {
         rules: [
             {
